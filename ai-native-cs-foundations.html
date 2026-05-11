@@ -182,7 +182,8 @@
       block-size: 96%;
     }
 
-    .logo-lightbox {
+    .logo-lightbox,
+    .testimonial-lightbox {
       position: fixed;
       inset: 0;
       z-index: 90;
@@ -198,12 +199,15 @@
     }
 
     .logo-lightbox.is-open,
-    .logo-lightbox.is-closing {
+    .logo-lightbox.is-closing,
+    .testimonial-lightbox.is-open,
+    .testimonial-lightbox.is-closing {
       opacity: 1;
       pointer-events: auto;
     }
 
-    .logo-lightbox.is-closing {
+    .logo-lightbox.is-closing,
+    .testimonial-lightbox.is-closing {
       opacity: 0;
     }
 
@@ -230,6 +234,37 @@
       inline-size: 96%;
       block-size: 96%;
       object-fit: contain;
+      backface-visibility: hidden;
+    }
+
+    .testimonial-modal-card {
+      display: grid;
+      place-items: center;
+      inline-size: min(82vw, calc(84vh * 5 / 7), 620px);
+      aspect-ratio: 5 / 7;
+      max-block-size: 84vh;
+      border: 1px solid var(--fg);
+      border-radius: 4px;
+      background: var(--surface);
+      box-shadow: 18px 18px 0 color-mix(in oklch, var(--fg), transparent 72%);
+      padding: clamp(8px, 1.3vw, 14px);
+      transform: scale(0.36) rotateY(-540deg);
+      transform-style: preserve-3d;
+      opacity: 0;
+      animation: logoSpinIn 560ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      overflow: hidden;
+    }
+
+    .testimonial-lightbox.is-closing .testimonial-modal-card {
+      animation: logoSpinOut 360ms cubic-bezier(0.7, 0, 0.84, 0) forwards;
+    }
+
+    .testimonial-modal-card img {
+      display: block;
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: contain;
+      border-radius: 2px;
       backface-visibility: hidden;
     }
 
@@ -979,6 +1014,42 @@
       text-transform: uppercase;
     }
 
+    .professor-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-block-start: 18px;
+    }
+
+    .professor-card {
+      appearance: none;
+      margin: 0;
+      min-block-size: 0;
+      border-radius: 4px;
+      border: 1px solid var(--fg);
+      background: var(--surface);
+      padding: 10px;
+      overflow: hidden;
+      display: block;
+      color: inherit;
+      cursor: pointer;
+      text-align: start;
+      transition: transform 140ms ease, box-shadow 140ms ease;
+    }
+
+    .professor-card:hover {
+      transform: translate(-5px, -5px);
+      box-shadow: 5px 5px 0 var(--fg);
+    }
+
+    .professor-card img {
+      display: block;
+      inline-size: 100%;
+      block-size: auto;
+      border-radius: 2px;
+      background: var(--surface);
+    }
+
     .pricing-band {
       display: grid;
       grid-template-columns: minmax(0, 0.8fr) minmax(320px, 0.5fr);
@@ -1218,7 +1289,7 @@
         min-inline-size: 220px;
       }
 
-      .module-grid, .proof-grid {
+      .module-grid, .proof-grid, .professor-grid {
         grid-template-columns: 1fr;
       }
 
@@ -1591,6 +1662,17 @@
             <span class="stamp">Real-world context</span>
           </article>
         </div>
+        <div class="professor-grid" aria-label="Professor testimonials">
+          <button class="professor-card reveal tilt-target scroll-float" type="button" data-scroll-speed="-4" data-scroll-rotate="-0.4" data-reveal-delay="0" data-testimonial-trigger data-preview-src="assets/SE_Testimonial.png" data-preview-alt="Software Engineering professor testimonial for Mitra Boga">
+            <img src="assets/SE_Testimonial.png" alt="Software Engineering professor testimonial for Mitra Boga" loading="lazy" />
+          </button>
+          <button class="professor-card reveal tilt-target scroll-float" type="button" data-scroll-speed="-6" data-scroll-rotate="0.4" data-reveal-delay="160" data-testimonial-trigger data-preview-src="assets/WAD_Testimonial.png" data-preview-alt="Web Application Development professor testimonial for Mitra Boga">
+            <img src="assets/WAD_Testimonial.png" alt="Web Application Development professor testimonial for Mitra Boga" loading="lazy" />
+          </button>
+          <button class="professor-card reveal tilt-target scroll-float" type="button" data-scroll-speed="-5" data-scroll-rotate="-0.3" data-reveal-delay="320" data-testimonial-trigger data-preview-src="assets/CYSEC_Testimonial.png" data-preview-alt="Cybersecurity professor testimonial for Mitra Boga">
+            <img src="assets/CYSEC_Testimonial.png" alt="Cybersecurity professor testimonial for Mitra Boga" loading="lazy" />
+          </button>
+        </div>
       </div>
     </section>
 
@@ -1654,6 +1736,12 @@
     </div>
   </div>
 
+  <div class="testimonial-lightbox" data-testimonial-lightbox aria-hidden="true" role="dialog" aria-label="Professor testimonial preview">
+    <div class="testimonial-modal-card" data-testimonial-modal>
+      <img src="" alt="" data-testimonial-modal-image />
+    </div>
+  </div>
+
   <footer>
     <div class="wrap footer-inner">
       <span>&copy; 2026 Mitra Boga. AI-Native Computer Science Foundations.</span>
@@ -1691,7 +1779,8 @@
 
     const revealItems = Array.from(document.querySelectorAll('.reveal'));
     revealItems.forEach((item, index) => {
-      item.style.setProperty('--delay', `${Math.min(index % 4, 3) * 70}ms`);
+      const explicitDelay = item.dataset.revealDelay;
+      item.style.setProperty('--delay', explicitDelay ? `${explicitDelay}ms` : `${Math.min(index % 4, 3) * 70}ms`);
     });
 
     const observer = new IntersectionObserver((entries) => {
@@ -1753,6 +1842,11 @@
     const logoTrigger = document.querySelector('[data-logo-trigger]');
     const logoLightbox = document.querySelector('[data-logo-lightbox]');
     const logoModal = document.querySelector('[data-logo-modal]');
+    const testimonialTriggers = Array.from(document.querySelectorAll('[data-testimonial-trigger]'));
+    const testimonialLightbox = document.querySelector('[data-testimonial-lightbox]');
+    const testimonialModal = document.querySelector('[data-testimonial-modal]');
+    const testimonialModalImage = document.querySelector('[data-testimonial-modal-image]');
+    let activeTestimonialTrigger = null;
 
     function openLogoPreview() {
       if (!logoLightbox) return;
@@ -1777,8 +1871,43 @@
     logoTrigger?.addEventListener('click', openLogoPreview);
     logoLightbox?.addEventListener('click', closeLogoPreview);
     logoModal?.addEventListener('click', (event) => event.stopPropagation());
+
+    function openTestimonialPreview(trigger) {
+      if (!testimonialLightbox || !testimonialModalImage) return;
+      activeTestimonialTrigger = trigger;
+      testimonialModalImage.src = trigger.dataset.previewSrc || '';
+      testimonialModalImage.alt = trigger.dataset.previewAlt || 'Professor testimonial preview';
+      testimonialLightbox.classList.remove('is-closing');
+      testimonialLightbox.classList.add('is-open');
+      testimonialLightbox.setAttribute('aria-hidden', 'false');
+      document.documentElement.style.overflow = 'hidden';
+    }
+
+    function closeTestimonialPreview() {
+      if (!testimonialLightbox || !testimonialLightbox.classList.contains('is-open')) return;
+      testimonialLightbox.classList.remove('is-open');
+      testimonialLightbox.classList.add('is-closing');
+      window.setTimeout(() => {
+        testimonialLightbox.classList.remove('is-closing');
+        testimonialLightbox.setAttribute('aria-hidden', 'true');
+        if (testimonialModalImage) testimonialModalImage.src = '';
+        document.documentElement.style.overflow = '';
+        activeTestimonialTrigger?.focus({ preventScroll: true });
+        activeTestimonialTrigger = null;
+      }, 360);
+    }
+
+    testimonialTriggers.forEach((trigger) => {
+      trigger.addEventListener('click', () => openTestimonialPreview(trigger));
+    });
+    testimonialLightbox?.addEventListener('click', closeTestimonialPreview);
+    testimonialModal?.addEventListener('click', (event) => event.stopPropagation());
+
     window.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') closeLogoPreview();
+      if (event.key === 'Escape') {
+        closeLogoPreview();
+        closeTestimonialPreview();
+      }
     });
   </script>
 </body>
