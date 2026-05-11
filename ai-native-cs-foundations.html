@@ -1,0 +1,1785 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI-Native Computer Science Foundations - Mitra Boga</title>
+  <meta name="description" content="A high-fidelity landing page for Mitra Boga's AI-native computer science foundation program for Grade 6-12 students." />
+  <link rel="icon" type="image/png" href="mozq421x-MTA_Favicon.png" />
+  <style>
+    :root {
+      --bg: oklch(97% 0.004 95);
+      --surface: oklch(100% 0 0);
+      --fg: oklch(24% 0.004 260);
+      --muted: oklch(50% 0.012 260);
+      --border: oklch(89% 0.006 95);
+      --accent: oklch(29% 0.07 265);
+      --highlight: oklch(77% 0.15 82);
+      --panel: oklch(94% 0.006 95);
+      --font-display: 'Helvetica Neue', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --font-body: 'Helvetica Neue', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --font-mono: ui-monospace, 'JetBrains Mono', 'IBM Plex Mono', Menlo, monospace;
+      --float-border: 4px;
+    }
+
+    * { box-sizing: border-box; }
+    @property --float-y {
+      syntax: '<length>';
+      inherits: false;
+      initial-value: 0px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 50% 10%, color-mix(in oklch, var(--highlight), transparent 88%), transparent 32rem),
+        linear-gradient(180deg, var(--panel), var(--bg) 44rem);
+      color: var(--fg);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      z-index: 100;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+    .wrap { width: min(100% - 32px, 1440px); margin-inline: auto; }
+    .narrow { width: min(100% - 32px, 900px); margin-inline: auto; }
+
+    .site-nav {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 50;
+      border-block-end: 1px solid color-mix(in oklch, var(--fg), transparent 86%);
+      background: color-mix(in oklch, var(--bg), transparent 8%);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding-block: 14px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      display: block;
+      inline-size: 36px;
+      block-size: 36px;
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      background: var(--surface);
+      object-fit: contain;
+      padding: 4px;
+    }
+
+    .floating-icon {
+      position: relative;
+      display: grid;
+      place-items: center;
+      inline-size: var(--size, 94px);
+      block-size: var(--size, 94px);
+      border: var(--float-border) solid var(--icon-border, var(--surface));
+      background: var(--surface);
+      box-shadow: 10px 10px 0 color-mix(in oklch, var(--fg), transparent 82%);
+      transform: rotate(calc(var(--angle, -5deg) + var(--scroll-rot, 0deg))) translate3d(var(--drift-x, 0px), calc(var(--base-y, 0px) + var(--float-y, 0px) + var(--drift-y, 0px)), 0);
+      animation: iconFloat 5.4s ease-in-out infinite;
+      transition: transform 220ms ease, box-shadow 220ms ease;
+      overflow: hidden;
+    }
+
+    button.floating-icon {
+      padding: 0;
+      border-radius: 0;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .floating-icon img {
+      inline-size: 82%;
+      block-size: 82%;
+      object-fit: contain;
+    }
+
+    .floating-icon:hover {
+      box-shadow: 13px 13px 0 color-mix(in oklch, var(--fg), transparent 72%);
+      transform: rotate(calc(var(--angle, -5deg) + var(--scroll-rot, 0deg))) translate3d(var(--drift-x, 0px), calc(var(--base-y, 0px) - 8px + var(--drift-y, 0px)), 0);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+      flex-wrap: wrap;
+      color: color-mix(in oklch, var(--fg), transparent 22%);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .nav-links a {
+      padding: 9px 12px;
+      border-radius: 999px;
+      transition: background 180ms ease, color 180ms ease;
+    }
+
+    .nav-links a:hover, .nav-links a:focus-visible {
+      color: var(--accent);
+      background: color-mix(in oklch, var(--accent), transparent 92%);
+      outline: none;
+    }
+
+    .connect {
+      background: var(--fg);
+      color: var(--bg);
+      border: 1px solid var(--fg);
+    }
+
+    .hero {
+      min-block-size: calc(100svh - 66px);
+      display: grid;
+      place-items: center;
+      padding-block: clamp(72px, 11vw, 148px) 64px;
+      position: relative;
+    }
+
+    .hero-logo-float {
+      --size: clamp(76px, 9vw, 118px);
+      --icon-border: var(--highlight);
+      --angle: 7deg;
+      position: absolute;
+      inset-block-start: clamp(92px, 13vw, 170px);
+      inset-inline-end: clamp(20px, 8vw, 140px);
+      z-index: 2;
+      background: color-mix(in oklch, var(--surface), transparent 8%);
+    }
+
+    .hero-logo-float img {
+      inline-size: 96%;
+      block-size: 96%;
+    }
+
+    .logo-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: color-mix(in oklch, var(--fg), transparent 46%);
+      backdrop-filter: blur(9px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 260ms ease;
+      perspective: 1200px;
+    }
+
+    .logo-lightbox.is-open,
+    .logo-lightbox.is-closing {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .logo-lightbox.is-closing {
+      opacity: 0;
+    }
+
+    .logo-modal-card {
+      display: grid;
+      place-items: center;
+      inline-size: min(74vw, 560px);
+      aspect-ratio: 1;
+      border: var(--float-border) solid var(--highlight);
+      background: color-mix(in oklch, var(--surface), transparent 5%);
+      box-shadow: 18px 18px 0 color-mix(in oklch, var(--fg), transparent 72%);
+      transform: scale(0.36) rotateY(-540deg);
+      transform-style: preserve-3d;
+      opacity: 0;
+      animation: logoSpinIn 560ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      overflow: hidden;
+    }
+
+    .logo-lightbox.is-closing .logo-modal-card {
+      animation: logoSpinOut 360ms cubic-bezier(0.7, 0, 0.84, 0) forwards;
+    }
+
+    .logo-modal-card img {
+      inline-size: 96%;
+      block-size: 96%;
+      object-fit: contain;
+      backface-visibility: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: center;
+      text-align: center;
+      gap: 34px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .kicker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      line-height: 1.5;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    h1 {
+      margin: 0;
+      max-inline-size: 13ch;
+      font-family: var(--font-display);
+      font-size: clamp(56px, 11vw, 150px);
+      line-height: 0.86;
+      letter-spacing: -0.05em;
+      text-transform: uppercase;
+      font-weight: 300;
+      text-wrap: balance;
+    }
+
+    h1 strong {
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .hero-copy {
+      max-inline-size: 760px;
+      margin: 0;
+      color: color-mix(in oklch, var(--fg), transparent 26%);
+      font-size: clamp(18px, 2vw, 25px);
+      line-height: 1.45;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      text-wrap: pretty;
+    }
+
+    .statement-badge {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      max-inline-size: min(100%, 780px);
+      padding: 17px 26px;
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: var(--bg);
+      font-size: clamp(12px, 1.6vw, 16px);
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transform: rotate(-1deg);
+      box-shadow: 6px 6px 0 var(--highlight);
+      text-align: center;
+    }
+
+    .statement-badge span {
+      display: block;
+    }
+
+    .statement-badge span:last-child {
+      white-space: nowrap;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-block-size: 46px;
+      padding: 12px 18px;
+      border: 1px solid var(--fg);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+
+    .btn.primary {
+      background: var(--fg);
+      color: var(--bg);
+    }
+
+    .btn.secondary {
+      background: color-mix(in oklch, var(--surface), transparent 12%);
+      color: var(--fg);
+    }
+
+    .btn:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 3px 3px 0 var(--fg);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translate3d(var(--drift-x, 0px), calc(26px + var(--drift-y, 0px)), 0) rotate(var(--scroll-rot, 0deg));
+      filter: blur(10px);
+      transition: opacity 760ms cubic-bezier(0.16, 1, 0.3, 1), transform 760ms cubic-bezier(0.16, 1, 0.3, 1), filter 760ms cubic-bezier(0.16, 1, 0.3, 1);
+      transition-delay: var(--delay, 0ms);
+      will-change: transform, opacity, filter;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translate3d(var(--drift-x, 0px), var(--drift-y, 0px), 0) rotate(var(--scroll-rot, 0deg));
+      filter: blur(0);
+    }
+
+    .tilt-target {
+      transform: translate3d(var(--drift-x, 0px), calc(var(--drift-y, 0px) + var(--lift, 0px)), 0) perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) rotate(var(--scroll-rot, 0deg));
+      transition: transform 220ms ease, box-shadow 160ms ease;
+      will-change: transform;
+    }
+
+    .scroll-float {
+      will-change: transform;
+    }
+
+    .scroll-float:not(.floating-icon):not(.reveal):not(.tilt-target) {
+      transform: translate3d(var(--drift-x, 0px), var(--drift-y, 0px), 0) rotate(var(--scroll-rot, 0deg));
+    }
+
+    .hero-orbit {
+      position: relative;
+      inline-size: min(100%, 980px);
+      min-block-size: 264px;
+      margin-block-start: 18px;
+    }
+
+    .program-card {
+      position: relative;
+      inline-size: min(100%, 360px);
+      margin-inline: auto;
+      aspect-ratio: 3 / 4;
+      border: 1px solid color-mix(in oklch, var(--fg), transparent 78%);
+      border-radius: 24px;
+      padding: 12px;
+      background: color-mix(in oklch, var(--surface), transparent 12%);
+      box-shadow: 0 18px 70px color-mix(in oklch, var(--fg), transparent 88%);
+      overflow: hidden;
+      animation: blurIn 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .code-panel {
+      block-size: 100%;
+      border-radius: 18px;
+      background: var(--fg);
+      color: var(--bg);
+      padding: 20px;
+      text-align: start;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .dots { display: flex; gap: 7px; }
+    .dots i {
+      inline-size: 9px;
+      block-size: 9px;
+      border-radius: 50%;
+      background: var(--highlight);
+      opacity: 0.9;
+    }
+
+    .terminal {
+      margin-block-start: 28px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.8;
+      color: color-mix(in oklch, var(--bg), transparent 20%);
+    }
+
+    .terminal b { color: var(--highlight); font-weight: 600; }
+    .metric-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .metric {
+      border: 1px solid color-mix(in oklch, var(--bg), transparent 82%);
+      border-radius: 12px;
+      padding: 12px 10px;
+    }
+
+    .metric strong {
+      display: block;
+      color: var(--highlight);
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .metric span {
+      display: block;
+      margin-block-start: 4px;
+      color: color-mix(in oklch, var(--bg), transparent 36%);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .float-chip {
+      position: absolute;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border: 1px solid color-mix(in oklch, var(--fg), transparent 76%);
+      border-radius: 999px;
+      background: color-mix(in oklch, var(--surface), transparent 4%);
+      color: var(--fg);
+      font-weight: 700;
+      font-size: 13px;
+      box-shadow: 0 10px 30px color-mix(in oklch, var(--fg), transparent 92%);
+      animation: floatSlow 4.8s ease-in-out infinite;
+    }
+
+    .float-chip::before {
+      content: "";
+      inline-size: 9px;
+      block-size: 9px;
+      border-radius: 50%;
+      background: var(--highlight);
+    }
+
+    .chip-a { inset-block-start: 22%; inset-inline-start: 7%; }
+    .chip-b { inset-block-end: 10%; inset-inline-start: 2%; animation-delay: 300ms; }
+    .chip-c { inset-block-start: 7%; inset-inline-end: 11%; animation-delay: 800ms; }
+    .chip-d { inset-block-end: 12%; inset-inline-end: 4%; animation-delay: 400ms; }
+
+    section {
+      padding-block: clamp(72px, 9vw, 132px);
+      border-block-start: 1px solid color-mix(in oklch, var(--fg), transparent 90%);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(160px, 0.34fr) minmax(0, 1fr);
+      gap: clamp(24px, 6vw, 80px);
+      align-items: end;
+      margin-block-end: 44px;
+      position: relative;
+    }
+
+    .section-index {
+      font-family: var(--font-mono);
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .section-meta {
+      position: relative;
+      min-block-size: 148px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 18px;
+    }
+
+    #syllabus .section-meta {
+      position: relative;
+      overflow: visible;
+    }
+
+    .section-art {
+      position: relative;
+      inline-size: min(100%, 318px);
+      min-block-size: 126px;
+      margin-inline: auto;
+    }
+
+    .section-art .floating-icon {
+      position: absolute;
+    }
+
+    .section-art .floating-icon:nth-child(1) {
+      inset-inline-start: calc(50% - 102px);
+      inset-block-end: 12px;
+    }
+
+    .section-art .floating-icon:nth-child(2) {
+      inset-inline-start: calc(50% - 2px);
+      inset-block-end: 38px;
+      animation-delay: 520ms;
+    }
+
+    .about-art .floating-icon,
+    .tool-art .floating-icon {
+      --size: clamp(70px, 7vw, 98px);
+      --icon-border: var(--surface);
+      --base-y: -34px;
+    }
+
+    .about-art .floating-icon:nth-child(1) { --angle: -6deg; }
+    .about-art .floating-icon:nth-child(2) { --angle: 8deg; }
+    .tool-art .floating-icon:nth-child(1) { --angle: 7deg; }
+    .tool-art .floating-icon:nth-child(2) { --angle: -5deg; }
+
+    .arrow-art {
+      position: absolute;
+      z-index: 1;
+      inline-size: clamp(500px, 46vw, 760px);
+      block-size: auto;
+      inset-inline-start: clamp(-335px, -20vw, -215px);
+      inset-block-start: clamp(-62px, -3vw, -36px);
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .arrow-art img {
+      display: block;
+      inline-size: 100%;
+      block-size: auto;
+      object-fit: contain;
+      object-position: left center;
+      transform: rotate(-2deg);
+    }
+
+    .arrow-art + .section-index,
+    #syllabus .section-head h2 {
+      position: relative;
+      z-index: 2;
+    }
+
+    .cred-logo-grid {
+      display: grid;
+      grid-template-columns: max-content max-content;
+      column-gap: 6px;
+      row-gap: 14px;
+      align-items: center;
+      justify-content: center;
+      inline-size: max-content;
+      margin-inline: auto;
+    }
+
+    .cred-logo-card {
+      border: 1px solid var(--fg);
+      background: var(--surface);
+      border-radius: 2px;
+      padding: 12px;
+      display: grid;
+      place-items: center;
+      box-shadow: 3px 3px 0 color-mix(in oklch, var(--fg), transparent 82%);
+    }
+
+    .cred-logo-card.square:nth-child(1) {
+      justify-self: end;
+    }
+
+    .cred-logo-card.square:nth-child(4) {
+      justify-self: start;
+    }
+
+    .cred-logo-card.square {
+      inline-size: 84px;
+      block-size: 84px;
+    }
+
+    .cred-logo-card.rect {
+      inline-size: 180px;
+      block-size: 84px;
+    }
+
+    .cred-logo-card img {
+      max-inline-size: 100%;
+      max-block-size: 54px;
+      object-fit: contain;
+    }
+
+    .cred-logo-card.rect img {
+      max-inline-size: 92%;
+      max-block-size: 54px;
+    }
+
+    .cred-logo-card.opensauced img {
+      max-inline-size: 108%;
+      max-block-size: 60px;
+    }
+
+    .booking-art {
+      --size: clamp(78px, 8vw, 112px);
+      --angle: -7deg;
+      --icon-border: var(--surface);
+      --base-y: -34px;
+      inline-size: var(--size);
+      block-size: var(--size);
+      margin-inline: auto;
+    }
+
+    .booking-art img {
+      inline-size: 78%;
+      block-size: 78%;
+    }
+
+    h2 {
+      margin: 0;
+      max-inline-size: 920px;
+      font-size: clamp(38px, 6.4vw, 92px);
+      line-height: 0.92;
+      letter-spacing: -0.045em;
+      font-weight: 300;
+      text-transform: uppercase;
+      text-wrap: balance;
+    }
+
+    h2 strong { color: var(--accent); font-weight: 800; }
+
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(320px, 0.62fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(320px, 0.48fr) minmax(0, 0.8fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .portrait-frame {
+      border: 1px solid var(--fg);
+      border-radius: 4px;
+      background: var(--surface);
+      padding: 14px;
+      min-block-size: 620px;
+      overflow: hidden;
+    }
+
+    .portrait-frame img {
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
+      border-radius: 2px;
+      filter: saturate(0.92) contrast(1.04);
+    }
+
+    .about-card {
+      border: 1px solid var(--fg);
+      border-radius: 4px;
+      background: var(--surface);
+      padding: clamp(28px, 5vw, 56px);
+      display: grid;
+      align-content: space-between;
+      gap: 34px;
+    }
+
+    .about-card p {
+      margin: 0;
+      max-inline-size: 820px;
+      color: color-mix(in oklch, var(--fg), transparent 22%);
+      font-size: clamp(18px, 2vw, 23px);
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+    }
+
+    .about-facts {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .about-fact {
+      border: 1px solid color-mix(in oklch, var(--fg), transparent 80%);
+      border-radius: 14px;
+      padding: 18px;
+      background: color-mix(in oklch, var(--bg), transparent 25%);
+    }
+
+    .about-fact small {
+      display: block;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-block-end: 8px;
+    }
+
+    .about-fact strong {
+      display: block;
+      font-size: 18px;
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+    }
+
+    .manifesto {
+      border: 1px solid var(--fg);
+      background: var(--surface);
+      padding: clamp(28px, 5vw, 58px);
+      border-radius: 3px;
+      min-block-size: 520px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .manifesto p {
+      margin: 0;
+      max-inline-size: 790px;
+      font-size: clamp(24px, 3.4vw, 48px);
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      font-weight: 300;
+      text-wrap: balance;
+    }
+
+    .manifesto p strong {
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .principles {
+      display: grid;
+      gap: 12px;
+    }
+
+    .principle {
+      border: 1px solid color-mix(in oklch, var(--fg), transparent 78%);
+      background: color-mix(in oklch, var(--surface), transparent 10%);
+      border-radius: 16px;
+      padding: 22px;
+    }
+
+    .principle .num {
+      font-family: var(--font-mono);
+      color: var(--highlight);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+    }
+
+    .principle h3 {
+      margin: 10px 0 8px;
+      font-size: 20px;
+      line-height: 1.15;
+      letter-spacing: -0.015em;
+    }
+
+    .principle p {
+      margin: 0;
+      color: color-mix(in oklch, var(--fg), transparent 32%);
+      line-height: 1.55;
+      font-size: 15px;
+    }
+
+    .syllabus-shell {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      border: 1px solid var(--fg);
+      background: var(--surface);
+      min-block-size: 560px;
+    }
+
+    .month-tabs {
+      border-inline-end: 1px solid var(--fg);
+      background: var(--accent);
+      color: var(--bg);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .month-tabs button {
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 12px;
+      align-items: center;
+      min-block-size: 58px;
+      border: 1px solid color-mix(in oklch, var(--bg), transparent 76%);
+      border-radius: 14px;
+      color: inherit;
+      background: transparent;
+      text-align: start;
+      cursor: pointer;
+      padding: 10px;
+      transition: background 160ms ease, transform 160ms ease;
+    }
+
+    .month-tabs button:hover,
+    .month-tabs button[aria-selected="true"] {
+      background: var(--bg);
+      color: var(--accent);
+      transform: translateX(2px);
+    }
+
+    .month-tabs .m {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+
+    .month-tabs .label {
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+
+    .month-panel {
+      padding: clamp(24px, 5vw, 56px);
+      display: none;
+    }
+
+    .month-panel.active { display: block; animation: blurIn 420ms ease both; }
+
+    .panel-top {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 28px;
+      align-items: start;
+      margin-block-end: 32px;
+    }
+
+    .panel-top h3 {
+      margin: 0;
+      font-size: clamp(30px, 4.6vw, 60px);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      font-weight: 400;
+      max-inline-size: 760px;
+    }
+
+    .outcome-pill {
+      border: 1px solid var(--fg);
+      border-radius: 999px;
+      padding: 12px 16px;
+      white-space: nowrap;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .module {
+      border: 1px solid color-mix(in oklch, var(--fg), transparent 78%);
+      border-radius: 15px;
+      padding: 18px;
+      background: color-mix(in oklch, var(--bg), transparent 25%);
+    }
+
+    .module h4 {
+      margin: 0 0 14px;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .module ul {
+      margin: 0;
+      padding-inline-start: 18px;
+      color: color-mix(in oklch, var(--fg), transparent 28%);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .proof-card {
+      min-block-size: 310px;
+      border: 1px solid var(--fg);
+      background: var(--surface);
+      border-radius: 4px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 140ms ease, box-shadow 140ms ease;
+    }
+
+    .proof-card:hover {
+      transform: translate(-5px, -5px);
+      box-shadow: 5px 5px 0 var(--fg);
+    }
+
+    .proof-card .label {
+      font-family: var(--font-mono);
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .proof-card h3 {
+      margin: 22px 0 12px;
+      font-size: clamp(23px, 2.7vw, 34px);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .proof-card p {
+      margin: 0;
+      color: color-mix(in oklch, var(--fg), transparent 30%);
+      line-height: 1.55;
+    }
+
+    .proof-card .stamp {
+      align-self: flex-start;
+      margin-block-start: 28px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      border-radius: 999px;
+      padding: 8px 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .pricing-band {
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(320px, 0.5fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .price-card {
+      border: 1px solid var(--fg);
+      background: var(--fg);
+      color: var(--bg);
+      border-radius: 4px;
+      padding: clamp(30px, 5vw, 58px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-block-size: 420px;
+    }
+
+    .price {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-block: 28px;
+    }
+
+    .price strong {
+      font-size: clamp(72px, 10vw, 140px);
+      line-height: 0.82;
+      letter-spacing: -0.06em;
+      color: var(--highlight);
+    }
+
+    .price span {
+      color: color-mix(in oklch, var(--bg), transparent 26%);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .price-card p {
+      margin: 0;
+      max-inline-size: 640px;
+      color: color-mix(in oklch, var(--bg), transparent 24%);
+      font-size: clamp(18px, 2vw, 24px);
+      line-height: 1.45;
+      letter-spacing: -0.01em;
+    }
+
+    .schedule-list {
+      border: 1px solid color-mix(in oklch, var(--fg), transparent 78%);
+      border-radius: 18px;
+      background: color-mix(in oklch, var(--surface), transparent 10%);
+      padding: 24px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .schedule-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding-block: 15px;
+      border-block-end: 1px solid color-mix(in oklch, var(--fg), transparent 88%);
+    }
+
+    .schedule-item:last-child { border-block-end: 0; }
+    .schedule-item span:first-child {
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .schedule-item span:last-child {
+      font-weight: 800;
+      text-align: end;
+    }
+
+    .contact-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 0.72fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .closing {
+      border: 1px solid var(--fg);
+      background: var(--surface);
+      border-radius: 4px;
+      padding: clamp(28px, 5vw, 56px);
+    }
+
+    .closing h2 {
+      max-inline-size: 790px;
+      margin-block-end: 28px;
+    }
+
+    .closing p {
+      margin: 0;
+      max-inline-size: 680px;
+      color: color-mix(in oklch, var(--fg), transparent 26%);
+      font-size: 20px;
+      line-height: 1.55;
+    }
+
+    .contact-card {
+      background: var(--accent);
+      color: var(--bg);
+      border-radius: 4px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .contact-card a {
+      display: block;
+      padding-block: 14px;
+      border-block-end: 1px solid color-mix(in oklch, var(--bg), transparent 80%);
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .contact-card small {
+      display: block;
+      margin-block-start: 10px;
+      color: color-mix(in oklch, var(--bg), transparent 28%);
+      font-family: var(--font-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    footer {
+      padding-block: 28px;
+      border-block-start: 1px solid color-mix(in oklch, var(--fg), transparent 86%);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    @keyframes blurIn {
+      from { opacity: 0; filter: blur(18px); transform: translateY(18px); }
+      to { opacity: 1; filter: blur(0); transform: translateY(0); }
+    }
+
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes iconFloat {
+      0%, 100% { --float-y: 0px; }
+      50% { --float-y: -11px; }
+    }
+
+    @keyframes logoSpinIn {
+      from {
+        opacity: 0;
+        transform: scale(0.36) rotateY(-540deg);
+        filter: blur(8px);
+      }
+      70% {
+        opacity: 1;
+        transform: scale(1.04) rotateY(18deg);
+        filter: blur(0);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) rotateY(0deg);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes logoSpinOut {
+      from {
+        opacity: 1;
+        transform: scale(1) rotateY(0deg);
+        filter: blur(0);
+      }
+      to {
+        opacity: 0;
+        transform: scale(0.34) rotateY(540deg);
+        filter: blur(8px);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+      .reveal {
+        opacity: 1;
+        transform: none;
+        filter: none;
+      }
+    }
+
+    @media (max-width: 1000px) {
+      .section-head, .about-grid, .philosophy-grid, .syllabus-shell, .pricing-band, .contact-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .section-meta {
+        min-block-size: auto;
+      }
+
+      .section-art {
+        max-inline-size: 340px;
+      }
+
+      .hero-logo-float {
+        inset-block-start: 96px;
+        inset-inline-end: 24px;
+        opacity: 0.9;
+      }
+
+      .month-tabs {
+        border-inline-end: 0;
+        border-block-end: 1px solid var(--fg);
+        flex-direction: row;
+        overflow-x: auto;
+      }
+
+      .month-tabs button {
+        min-inline-size: 220px;
+      }
+
+      .module-grid, .proof-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .float-chip { display: none; }
+
+      .portrait-frame {
+        min-block-size: auto;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
+      }
+
+      .nav-links a {
+        padding-inline: 8px;
+      }
+
+      .hero {
+        place-items: start;
+        text-align: start;
+      }
+
+      .hero-logo-float {
+        position: relative;
+        inset: auto;
+        justify-self: end;
+        margin-block: 8px -18px;
+      }
+
+      .hero-grid {
+        justify-items: start;
+        text-align: start;
+      }
+
+      h1 {
+        font-size: clamp(52px, 18vw, 86px);
+      }
+
+      .hero-actions {
+        justify-content: flex-start;
+      }
+
+      .hero-orbit {
+        min-block-size: 0;
+      }
+
+      .program-card {
+        inline-size: min(100%, 330px);
+        margin-inline: 0;
+      }
+
+      .section-art {
+        min-block-size: 106px;
+      }
+
+      .section-art .floating-icon:nth-child(2) {
+        inset-inline-start: calc(50% - 2px);
+      }
+
+      .arrow-art {
+        inline-size: 460px;
+        block-size: auto;
+        inset-inline-start: -275px;
+        inset-block-start: -30px;
+      }
+
+      .arrow-art img {
+        inline-size: 100%;
+        block-size: auto;
+      }
+
+      .cred-logo-grid {
+        gap: 12px;
+        max-inline-size: none;
+      }
+
+      .cred-logo-card.square {
+        inline-size: 72px;
+        block-size: 72px;
+      }
+
+      .cred-logo-card.rect {
+        inline-size: 150px;
+        block-size: 72px;
+      }
+
+      .about-facts {
+        grid-template-columns: 1fr;
+      }
+
+      .panel-top {
+        grid-template-columns: 1fr;
+      }
+
+      .outcome-pill {
+        justify-self: start;
+        white-space: normal;
+      }
+
+      .schedule-item {
+        flex-direction: column;
+      }
+
+      .schedule-item span:last-child {
+        text-align: start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav" aria-label="Primary">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top" aria-label="Mitra Boga home">
+        <img class="brand-mark" src="mozq421x-MTA_Favicon.png" alt="" />
+        <span>Mitra Boga</span>
+      </a>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#philosophy">Philosophy</a>
+        <a href="#syllabus">Syllabus</a>
+        <a href="#proof">Testimonials</a>
+        <a href="#pricing">Pricing</a>
+        <a href="contact.html" class="connect">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <header class="hero">
+      <button class="floating-icon hero-logo-float scroll-float" type="button" aria-label="Open MTA logo preview" data-logo-trigger data-scroll-speed="-16" data-scroll-rotate="2">
+        <img src="mozpxik4-MTA_Logo.png" alt="" />
+      </button>
+      <div class="wrap hero-grid">
+        <div class="kicker">Grade 6-12 AI-native engineering foundation program</div>
+        <h1>Build with <strong>AI</strong>. Think like an engineer.</h1>
+        <p class="hero-copy">A 5-month computer science foundation for ambitious students who want to understand computers, reason clearly, verify AI outputs, and build real projects instead of passively consuming tools.</p>
+        <div class="statement-badge"><span>Preparing the next generation of innovators.</span><span>Join the next cohort.</span></div>
+        <div class="hero-actions" aria-label="Calls to action">
+          <a class="btn primary" href="calendar.html">Join the next cohort</a>
+          <a class="btn secondary" href="#syllabus">View syllabus</a>
+        </div>
+
+        <div class="hero-orbit" aria-label="Program summary visual">
+          <div class="float-chip chip-a">AI-Native</div>
+          <div class="float-chip chip-b">Frontend + Backend</div>
+          <div class="float-chip chip-c">AI Certifications</div>
+          <div class="float-chip chip-d">Production-Grade Projects</div>
+          <div class="program-card tilt-target scroll-float" data-scroll-speed="-10" data-scroll-rotate="1.2">
+            <div class="code-panel">
+              <div>
+                <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+                <div class="terminal">
+                  <div>&gt; cohort.load("<b>future_builders</b>")</div>
+                  <div>&gt; teach(thinking, systems, code)</div>
+                  <div>&gt; ai.use(mode="<b>assist</b>")</div>
+                  <div>&gt; verify(outputs).then(build)</div>
+                </div>
+              </div>
+              <div class="metric-strip">
+                <div class="metric"><strong>5</strong><span>months</span></div>
+                <div class="metric"><strong>80+</strong><span>hours</span></div>
+                <div class="metric"><strong>40</strong><span>days</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="about">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-meta">
+            <div class="section-art about-art" aria-hidden="true">
+              <div class="floating-icon scroll-float" data-scroll-speed="-8" data-scroll-rotate="-1.5"><img src="mozxg7i9-WATERLOO_Logo.jpg" alt="" /></div>
+              <div class="floating-icon scroll-float" data-scroll-speed="-14" data-scroll-rotate="1.8"><img src="mozxg7i9-GITAM_Logo.png" alt="" /></div>
+            </div>
+            <div class="section-index">00 / About Me</div>
+          </div>
+          <h2>Mentorship from someone already building in the field.</h2>
+        </div>
+        <div class="about-grid">
+          <figure class="portrait-frame reveal tilt-target scroll-float" data-scroll-speed="-7" data-scroll-rotate="-0.8">
+            <img src="mp0k8zx0-Headshot_Me.jpeg" alt="Mitra Boga headshot" />
+          </figure>
+          <article class="about-card reveal scroll-float" data-scroll-speed="-4">
+            <p>Hi! I am Mitra Boga, a Computer Science Engineering student with a Mechanical Engineering minor at GITAM, after initially studying Accounting and Financial Management at the University of Waterloo. My goal is to help young, driven students build a practical foundation in software, systems, architecture, artificial intelligence and problem solving - not just memorize school material.</p>
+            <p>I teach from the belief that AI will become a normal and required aspect of engineering work, and those who ignore the inevitable will get outpaced by those who leverage it. Students need the judgment to use it well: how to ask better questions, verify answers, debug code, understand systems, and build real projects with confidence. This is where I can help!</p>
+            <div class="about-facts" aria-label="About Mitra facts">
+              <div class="about-fact"><small>Education</small><strong>B. Tech, CSE @ GITAM - 8.22 CGPA</strong></div>
+              <div class="about-fact"><small>Prev. education</small><strong>BAFM, Data Analytics @ UW</strong></div>
+              <div class="about-fact"><small>Professional experience</small><strong>Full Stack Developer @ OpenSauced - GitHub Octernship</strong></div>
+              <div class="about-fact"><small>Teaching vision</small><strong>Hands-on Foundations and Practical Building for intentional students</strong></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="philosophy">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-meta">
+            <div class="section-art tool-art" aria-hidden="true">
+              <div class="floating-icon scroll-float" data-scroll-speed="-9" data-scroll-rotate="1.7"><img src="mozy3hio-PYTHON_Logo.png" alt="" /></div>
+              <div class="floating-icon scroll-float" data-scroll-speed="-13" data-scroll-rotate="-1.4"><img src="mozy3kvh-CLAUDE_Logo.png" alt="" /></div>
+            </div>
+            <div class="section-index">01 / Positioning</div>
+          </div>
+          <h2>Not a coding class. <strong>An AI-first CS foundation.</strong></h2>
+        </div>
+        <div class="philosophy-grid">
+          <article class="manifesto reveal scroll-float" data-scroll-speed="-5">
+            <p>Kids who only learn technical skills will be outpaced by AI. Students who understand how computers work, how to reason, and how to verify AI outputs become <strong>builders instead of consumers.</strong></p>
+            <div class="kicker">AI is a tool - not a replacement for thinking.</div>
+          </article>
+          <div class="principles" aria-label="Program principles">
+            <article class="principle reveal scroll-float" data-scroll-speed="-3">
+              <span class="num">01</span>
+              <h3>Human reasoning first</h3>
+              <p>Students learn logic, computational thinking, debugging, and systems thinking before treating AI as an answer machine.</p>
+            </article>
+            <article class="principle reveal scroll-float" data-scroll-speed="-6">
+              <span class="num">02</span>
+              <h3>AI leverage, not dependency</h3>
+              <p>They practice prompting, checking claims, avoiding hallucinations, and using AI to accelerate learning without outsourcing judgment.</p>
+            </article>
+            <article class="principle reveal scroll-float" data-scroll-speed="-4">
+              <span class="num">03</span>
+              <h3>Projects over memorization</h3>
+              <p>Every concept points toward a build: websites, simple apps, games, automations, diagrams, and final presentations.</p>
+            </article>
+            <article class="principle reveal scroll-float" data-scroll-speed="-7">
+              <span class="num">04</span>
+              <h3>University-ready confidence</h3>
+              <p>The program builds an early edge for high school CS, hackathons, STEM competitions, and future engineering pathways.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="syllabus">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-meta">
+            <div class="arrow-art" aria-hidden="true">
+              <img src="mp0qmhqn-Red_Arrow.png" alt="" />
+            </div>
+            <div class="section-index">02 / Syllabus</div>
+          </div>
+          <h2>Five months from foundations to real-world builds.</h2>
+        </div>
+        <div class="syllabus-shell reveal scroll-float" data-scroll-speed="-6">
+          <div class="month-tabs" role="tablist" aria-label="Curriculum months">
+            <button role="tab" aria-selected="true" aria-controls="month-1" id="tab-1" data-month="1"><span class="m">M01</span><span class="label">Foundations</span></button>
+            <button role="tab" aria-selected="false" aria-controls="month-2" id="tab-2" data-month="2"><span class="m">M02</span><span class="label">Web creation</span></button>
+            <button role="tab" aria-selected="false" aria-controls="month-3" id="tab-3" data-month="3"><span class="m">M03</span><span class="label">Systems</span></button>
+            <button role="tab" aria-selected="false" aria-controls="month-4" id="tab-4" data-month="4"><span class="m">M04</span><span class="label">AI mindset</span></button>
+            <button role="tab" aria-selected="false" aria-controls="month-5" id="tab-5" data-month="5"><span class="m">M05</span><span class="label">Final projects</span></button>
+          </div>
+
+          <article class="month-panel active" id="month-1" role="tabpanel" aria-labelledby="tab-1">
+            <div class="panel-top">
+              <h3>Foundations & computational thinking</h3>
+              <span class="outcome-pill">Outcome: logic + Python basics</span>
+            </div>
+            <div class="module-grid">
+              <div class="module"><h4>Core CS</h4><ul><li>What is a computer?</li><li>Components, binary, flowcharts</li><li>Pseudocode and reasoning</li><li>Input, output, and data processing</li><li>How software interacts with hardware</li><li>Computational problem-solving fundamentals</li></ul></div>
+              <div class="module"><h4>AI literacy</h4><ul><li>How ChatGPT works, simplified</li><li>Responsible AI usage</li><li>Hallucinations and verification</li><li>How to fact-check AI outputs</li><li>Understanding AI strengths vs weaknesses</li><li>Using AI as a learning accelerator</li></ul></div>
+              <div class="module"><h4>Programming</h4><ul><li>Python variables</li><li>Loops and conditionals</li><li>Simple beginner projects</li><li>Functions and reusable code</li><li>Debugging beginner errors</li><li>Logic-building coding exercises</li></ul></div>
+            </div>
+          </article>
+
+          <article class="month-panel" id="month-2" role="tabpanel" aria-labelledby="tab-2">
+            <div class="panel-top">
+              <h3>Web development & digital creation</h3>
+              <span class="outcome-pill">Outcome: first web portfolio</span>
+            </div>
+            <div class="module-grid">
+              <div class="module"><h4>Build</h4><ul><li>HTML, CSS, JavaScript basics</li><li>Interactive web elements</li><li>Personal website and portfolio</li><li>Responsive web layouts</li><li>Website publishing fundamentals</li><li>Beginner frontend project deployment</li></ul></div>
+              <div class="module"><h4>Design</h4><ul><li>UI/UX fundamentals</li><li>Clean layouts and hierarchy</li><li>How to avoid AI slop</li><li>Typography and spacing principles</li><li>Color theory for web design</li><li>User-focused design thinking</li></ul></div>
+              <div class="module"><h4>AI workflow</h4><ul><li>Prompting for code help</li><li>Debugging with AI</li><li>Testing generated code</li><li>Refining AI-generated frontend designs</li><li>Comparing multiple AI solutions</li><li>Building faster using AI copilots</li></ul></div>
+            </div>
+          </article>
+
+          <article class="month-panel" id="month-3" role="tabpanel" aria-labelledby="tab-3">
+            <div class="panel-top">
+              <h3>Systems, networking & cloud</h3>
+              <span class="outcome-pill">Outcome: internet intuition</span>
+            </div>
+            <div class="module-grid">
+              <div class="module"><h4>Systems</h4><ul><li>Operating systems</li><li>CPU, memory, file systems</li><li>How programs actually run</li><li>RAM vs storage understanding</li><li>Processes and multitasking</li><li>Terminal and command-line basics</li></ul></div>
+              <div class="module"><h4>Networking</h4><ul><li>IP addresses and servers</li><li>Internet architecture</li><li>APIs and data flow</li><li>How websites communicate online</li><li>DNS and domain fundamentals</li><li>Network security basics</li></ul></div>
+              <div class="module"><h4>Cloud</h4><ul><li>Cloud computing basics</li><li>Why GPUs matter</li><li>AI infrastructure diagrams</li><li>Intro to AWS and cloud platforms</li><li>Cloud storage and databases</li><li>Scalable application concepts</li></ul></div>
+            </div>
+          </article>
+
+          <article class="month-panel" id="month-4" role="tabpanel" aria-labelledby="tab-4">
+            <div class="panel-top">
+              <h3>Artificial intelligence & engineering mindset</h3>
+              <span class="outcome-pill">Outcome: verify before trusting</span>
+            </div>
+            <div class="module-grid">
+              <div class="module"><h4>AI concepts</h4><ul><li>Machine learning basics</li><li>Neural networks</li><li>Large language models</li><li>AI training vs inference</li><li>Computer vision fundamentals</li><li>Real-world AI applications</li></ul></div>
+              <div class="module"><h4>Judgment</h4><ul><li>AI ethics</li><li>Prompt engineering</li><li>Human + AI collaboration</li><li>Detecting misinformation</li><li>Evaluating AI-generated answers</li><li>Decision-making with AI assistance</li></ul></div>
+              <div class="module"><h4>Engineering</h4><ul><li>Debugging and tradeoffs</li><li>Optimization</li><li>Architecture and systems thinking</li><li>Breaking large problems into smaller systems</li><li>Efficiency and scalability concepts</li><li>Engineering project planning</li></ul></div>
+            </div>
+          </article>
+
+          <article class="month-panel" id="month-5" role="tabpanel" aria-labelledby="tab-5">
+            <div class="panel-top">
+              <h3>Real-world building & final projects</h3>
+              <span class="outcome-pill">Outcome: present a build</span>
+            </div>
+            <div class="module-grid">
+              <div class="module"><h4>Project paths</h4><ul><li>Websites and AI tools</li><li>Simple apps and games</li><li>Automation systems</li><li>AI-powered productivity tools</li><li>Beginner cloud-based projects</li><li>Personal portfolio development</li></ul></div>
+              <div class="module"><h4>Process</h4><ul><li>Brainstorming and scoping</li><li>Independent thinking</li><li>Using AI effectively</li><li>Iterative improvement workflows</li><li>Research and experimentation</li><li>Technical documentation basics</li></ul></div>
+              <div class="module"><h4>Presentation</h4><ul><li>Final demo day</li><li>Explain engineering process</li><li>Communicate technical ideas</li><li>Presentation and storytelling skills</li><li>Receiving and applying feedback</li><li>Building confidence as a creator</li></ul></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="proof">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-meta">
+            <div class="cred-logo-grid scroll-float" aria-hidden="true" data-scroll-speed="-10" data-scroll-rotate="-0.7">
+              <div class="cred-logo-card square"><img src="mozykzgp-GitHub_Logo.png" alt="" /></div>
+              <div class="cred-logo-card rect opensauced"><img src="mozykzhg-OpenSauced_Logo.png" alt="" /></div>
+              <div class="cred-logo-card rect"><img src="mozykzgw-HARVARD_Logo.png" alt="" /></div>
+              <div class="cred-logo-card square"><img src="mozykzgg-AWS_Logo.jpg" alt="" /></div>
+            </div>
+            <div class="section-index">03 / Credibility</div>
+          </div>
+          <h2>Guided by a builder with academic and industry proof.</h2>
+        </div>
+        <div class="proof-grid">
+          <article class="proof-card reveal tilt-target scroll-float" data-scroll-speed="-4" data-scroll-rotate="-0.6">
+            <div>
+              <span class="label">Education</span>
+              <h3>Computer Science Engineering</h3>
+              <p>I am currently studying Computer Science and Engineering with a minor in Mechanical Engineering at GITAM University, Hyderabad. I have a background in Accounting and Financial Management from the University of Waterloo, where I specialized in Business Analytics.</p>
+            </div>
+            <span class="stamp">8.22 CGPA noted</span>
+          </article>
+          <article class="proof-card reveal tilt-target scroll-float" data-scroll-speed="-7" data-scroll-rotate="0.5">
+            <div>
+              <span class="label">Certifications</span>
+              <h3>Harvard + AWS</h3>
+              <p>Officially Completed and Certified in Python, SQL, AI and Cybersecurity via Harvard's CS50 courses by Harvard University. Also Attained my AWS Solutions Architect Professional Certification.</p>
+            </div>
+            <span class="stamp">AI + CS foundation</span>
+          </article>
+          <article class="proof-card reveal tilt-target scroll-float" data-scroll-speed="-5" data-scroll-rotate="-0.4">
+            <div>
+              <span class="label">Industry</span>
+              <h3>GitHub Octernship</h3>
+              <p>Professional experience includes a Full Stack Developer internship through GitHub Octernship, bringing real software development context into my Matrix Tutoring Academy classroom.</p>
+            </div>
+            <span class="stamp">Real-world context</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="section-meta">
+            <div class="floating-icon booking-art scroll-float" aria-hidden="true" data-scroll-speed="-12" data-scroll-rotate="1.3">
+              <img src="mozyoflg-Booking_ICON.png" alt="" />
+            </div>
+            <div class="section-index">04 / Pricing + Cohort</div>
+          </div>
+          <h2>Flexible tutoring structure with a serious cohort spine.</h2>
+        </div>
+        <div class="pricing-band">
+          <article class="price-card reveal scroll-float" data-scroll-speed="-5" data-scroll-rotate="-0.5">
+            <div>
+              <div class="kicker">Program rate</div>
+              <div class="price"><strong>$30</strong><span>CAD / hour</span></div>
+            </div>
+            <p>Designed for weekend learning: 1-2 hours per day on Saturdays and Sundays, approximately 80+ guided hours across the 5-month program.</p>
+          </article>
+          <div class="schedule-list reveal scroll-float" aria-label="Schedule details" data-scroll-speed="-8" data-scroll-rotate="0.6">
+            <div class="schedule-item"><span>Duration</span><span>5 months</span></div>
+            <div class="schedule-item"><span>Cohorts</span><span>2 per year, 1 month break</span></div>
+            <div class="schedule-item"><span>Weekly</span><span>2-4 hours total</span></div>
+            <div class="schedule-item"><span>IST timing</span><span>7:30 PM - 9:30 PM</span></div>
+            <div class="schedule-item"><span>Eastern timing</span><span>9:00 AM - 11:00 AM EST</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap contact-panel">
+        <article class="closing reveal">
+          <div class="section-index">05 / Next step</div>
+          <h2>For students ready to become early AI-first engineers.</h2>
+          <p>This program is positioned for curious Grade 6-12 students who want a meaningful edge: technical foundations, project confidence, and the judgment to use AI responsibly.</p>
+        </article>
+        <aside class="contact-card reveal">
+          <div>
+            <small>Email</small>
+            <a href="mailto:mitraboga31@gmail.com">mitraboga31@gmail.com</a>
+            <small>Phone / WhatsApp</small>
+            <a href="tel:+918125263863">+91 81252 63863</a>
+            <small>LinkedIn</small>
+            <a href="https://www.linkedin.com/in/bogamitra/">linkedin.com/in/bogamitra</a>
+            <small>GitHub</small>
+            <a href="https://github.com/mitraboga">github.com/mitraboga</a>
+          </div>
+          <a class="btn secondary" href="calendar.html">Start an inquiry</a>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <div class="logo-lightbox" data-logo-lightbox aria-hidden="true" role="dialog" aria-label="MTA logo preview">
+    <div class="logo-modal-card" data-logo-modal>
+      <img src="mozpxik4-MTA_Logo.png" alt="MTA logo" />
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span>&copy; 2026 Mitra Boga. AI-Native Computer Science Foundations.</span>
+      <span>Weekend cohorts for curious Grade 6-12 builders.</span>
+    </div>
+  </footer>
+
+  <script>
+    const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+    const panels = Array.from(document.querySelectorAll('[role="tabpanel"]'));
+
+    function activateMonth(month) {
+      tabs.forEach((tab) => {
+        const selected = tab.dataset.month === month;
+        tab.setAttribute('aria-selected', String(selected));
+      });
+      panels.forEach((panel, index) => {
+        panel.classList.toggle('active', String(index + 1) === month);
+      });
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => activateMonth(tab.dataset.month));
+      tab.addEventListener('keydown', (event) => {
+        const current = tabs.indexOf(tab);
+        const nextKey = event.key === 'ArrowRight' || event.key === 'ArrowDown';
+        const prevKey = event.key === 'ArrowLeft' || event.key === 'ArrowUp';
+        if (!nextKey && !prevKey) return;
+        event.preventDefault();
+        const nextIndex = nextKey ? (current + 1) % tabs.length : (current - 1 + tabs.length) % tabs.length;
+        tabs[nextIndex].focus();
+        activateMonth(tabs[nextIndex].dataset.month);
+      });
+    });
+
+    const revealItems = Array.from(document.querySelectorAll('.reveal'));
+    revealItems.forEach((item, index) => {
+      item.style.setProperty('--delay', `${Math.min(index % 4, 3) * 70}ms`);
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
+
+    revealItems.forEach((item) => observer.observe(item));
+
+    const tiltTargets = Array.from(document.querySelectorAll('.tilt-target'));
+    tiltTargets.forEach((target) => {
+      target.addEventListener('pointermove', (event) => {
+        const rect = target.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        target.style.setProperty('--rx', `${(-y * 3).toFixed(2)}deg`);
+        target.style.setProperty('--ry', `${(x * 3).toFixed(2)}deg`);
+        target.style.setProperty('--lift', '-3px');
+      });
+      target.addEventListener('pointerleave', () => {
+        target.style.setProperty('--rx', '0deg');
+        target.style.setProperty('--ry', '0deg');
+        target.style.setProperty('--lift', '0');
+      });
+    });
+
+    const scrollFloatItems = Array.from(document.querySelectorAll('.scroll-float'));
+    let ticking = false;
+
+    function updateScrollMotion() {
+      const viewportHeight = window.innerHeight || 1;
+      scrollFloatItems.forEach((item) => {
+        const rect = item.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        const progress = (center - viewportHeight / 2) / viewportHeight;
+        const clamped = Math.max(-1, Math.min(1, progress));
+        const speed = Number(item.dataset.scrollSpeed || -6);
+        const rotate = Number(item.dataset.scrollRotate || 0);
+        item.style.setProperty('--drift-y', `${(clamped * speed).toFixed(2)}px`);
+        item.style.setProperty('--drift-x', `${(clamped * speed * -0.18).toFixed(2)}px`);
+        item.style.setProperty('--scroll-rot', `${(clamped * rotate).toFixed(2)}deg`);
+      });
+      ticking = false;
+    }
+
+    function requestScrollMotion() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(updateScrollMotion);
+    }
+
+    window.addEventListener('scroll', requestScrollMotion, { passive: true });
+    window.addEventListener('resize', requestScrollMotion);
+    updateScrollMotion();
+
+    const logoTrigger = document.querySelector('[data-logo-trigger]');
+    const logoLightbox = document.querySelector('[data-logo-lightbox]');
+    const logoModal = document.querySelector('[data-logo-modal]');
+
+    function openLogoPreview() {
+      if (!logoLightbox) return;
+      logoLightbox.classList.remove('is-closing');
+      logoLightbox.classList.add('is-open');
+      logoLightbox.setAttribute('aria-hidden', 'false');
+      document.documentElement.style.overflow = 'hidden';
+    }
+
+    function closeLogoPreview() {
+      if (!logoLightbox || !logoLightbox.classList.contains('is-open')) return;
+      logoLightbox.classList.remove('is-open');
+      logoLightbox.classList.add('is-closing');
+      window.setTimeout(() => {
+        logoLightbox.classList.remove('is-closing');
+        logoLightbox.setAttribute('aria-hidden', 'true');
+        document.documentElement.style.overflow = '';
+        logoTrigger?.focus({ preventScroll: true });
+      }, 360);
+    }
+
+    logoTrigger?.addEventListener('click', openLogoPreview);
+    logoLightbox?.addEventListener('click', closeLogoPreview);
+    logoModal?.addEventListener('click', (event) => event.stopPropagation());
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeLogoPreview();
+    });
+  </script>
+</body>
+</html>

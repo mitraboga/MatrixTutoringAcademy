@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Book a Cohort Call - AI-Native CS Foundations</title>
+  <link rel="icon" type="image/png" href="mozq421x-MTA_Favicon.png" />
+  <style>
+    :root {
+      --bg: oklch(97% 0.004 95);
+      --surface: oklch(100% 0 0);
+      --fg: oklch(24% 0.004 260);
+      --muted: oklch(50% 0.012 260);
+      --border: oklch(89% 0.006 95);
+      --accent: oklch(29% 0.07 265);
+      --highlight: oklch(77% 0.15 82);
+      font-family: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-block-size: 100vh;
+      background:
+        radial-gradient(circle at 80% 16%, color-mix(in oklch, var(--highlight), transparent 84%), transparent 24rem),
+        var(--bg);
+      color: var(--fg);
+      overflow-x: hidden;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.16;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(100% - 32px, 1280px); margin-inline: auto; }
+
+    nav {
+      border-block-end: 1px solid color-mix(in oklch, var(--fg), transparent 86%);
+      background: color-mix(in oklch, var(--bg), transparent 8%);
+      backdrop-filter: blur(18px);
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 10;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-block: 14px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .brand img {
+      inline-size: 36px;
+      block-size: 36px;
+      object-fit: contain;
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      background: var(--surface);
+      padding: 4px;
+    }
+
+    .back {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    main {
+      padding-block: clamp(64px, 9vw, 120px);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(520px, 0.74fr);
+      gap: clamp(24px, 5vw, 68px);
+      align-items: start;
+    }
+
+    .kicker {
+      font-family: ui-monospace, 'JetBrains Mono', Menlo, monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    h1 {
+      margin: 18px 0 22px;
+      max-inline-size: 10ch;
+      font-size: clamp(58px, 9vw, 124px);
+      line-height: 0.86;
+      letter-spacing: -0.055em;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+
+    h1 strong {
+      color: var(--accent);
+      font-weight: 850;
+    }
+
+    .lede {
+      max-inline-size: 680px;
+      color: color-mix(in oklch, var(--fg), transparent 24%);
+      font-size: clamp(18px, 2vw, 24px);
+      line-height: 1.45;
+      letter-spacing: -0.01em;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-block-start: 30px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-block-size: 48px;
+      padding: 13px 18px;
+      border: 1px solid var(--fg);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+
+    .btn.primary {
+      background: var(--fg);
+      color: var(--bg);
+    }
+
+    .btn.secondary {
+      background: var(--surface);
+      color: var(--fg);
+    }
+
+    .btn:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 3px 3px 0 var(--fg);
+    }
+
+    .booking-card {
+      border: 1px solid var(--fg);
+      background: var(--surface);
+      border-radius: 4px;
+      padding: 24px;
+      box-shadow: 8px 8px 0 var(--highlight);
+    }
+
+    .booking-card img {
+      inline-size: 76px;
+      block-size: 76px;
+      object-fit: contain;
+      display: block;
+      margin-block-end: 22px;
+    }
+
+    .booking-card h2 {
+      margin: 0 0 14px;
+      font-size: clamp(28px, 4vw, 46px);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      font-weight: 420;
+    }
+
+    .booking-card p {
+      margin: 0;
+      color: color-mix(in oklch, var(--fg), transparent 26%);
+      line-height: 1.55;
+    }
+
+    .direct-booking-panel {
+      margin-block-start: 34px;
+      border: 1px solid var(--fg);
+      background: var(--surface);
+      border-radius: 4px;
+      padding: clamp(24px, 4vw, 44px);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .direct-booking-panel h2 {
+      margin: 0 0 10px;
+      font-size: clamp(26px, 3.4vw, 44px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      font-weight: 420;
+    }
+
+    .direct-booking-panel p {
+      margin: 0;
+      max-inline-size: 780px;
+      color: color-mix(in oklch, var(--fg), transparent 26%);
+      line-height: 1.55;
+    }
+
+    .calendar-embed {
+      margin-block-start: 18px;
+      border: 1px solid var(--fg);
+      border-radius: 4px;
+      background: var(--surface);
+      overflow: hidden;
+      box-shadow: 8px 8px 0 var(--highlight);
+    }
+
+    .calendar-embed iframe {
+      display: block;
+      inline-size: 100%;
+      block-size: 600px;
+      border: 0;
+      background: var(--surface);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-block-start: 18px;
+    }
+
+    .contact-item {
+      border: 1px solid color-mix(in oklch, var(--fg), transparent 78%);
+      border-radius: 14px;
+      padding: 16px;
+      background: color-mix(in oklch, var(--bg), transparent 24%);
+    }
+
+    .contact-item small {
+      display: block;
+      color: var(--muted);
+      font-family: ui-monospace, 'JetBrains Mono', Menlo, monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-block-end: 6px;
+    }
+
+    .contact-item a {
+      color: var(--accent);
+      font-weight: 850;
+      overflow-wrap: normal;
+      word-break: normal;
+    }
+
+    @media (max-width: 900px) {
+      .hero, .contact-grid, .direct-booking-panel {
+        grid-template-columns: 1fr;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="wrap nav-inner">
+      <a class="brand" href="index.html#top">
+        <img src="mozq421x-MTA_Favicon.png" alt="" />
+        <span>Mitra Boga</span>
+      </a>
+      <a class="back" href="index.html#pricing">Back to program</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <div class="kicker">External booking calendar</div>
+        <h1>Book a <strong>cohort</strong> call.</h1>
+        <p class="lede">Use Google Calendar to create a consultation booking draft, or contact me directly by Email or WhatsApp. The call is for parents or students who want to discuss the next AI-Native Computer Science Foundations cohort.</p>
+        <div class="actions">
+          <a class="btn primary" href="https://calendar.app.google/nMySATndMpezxhWp6">Open booking calendar</a>
+          <a class="btn secondary" href="mailto:mitraboga31@gmail.com?subject=AI-Native%20CS%20Foundations%20Cohort%20Inquiry">Email Mitra</a>
+        </div>
+      </div>
+
+      <aside class="booking-card">
+        <img src="mozyoflg-Booking_ICON.png" alt="" />
+        <h2>Suggested call agenda</h2>
+        <p>Student grade level, current coding experience, AI familiarity, weekend availability, parent goals, and the best cohort timing.</p>
+        <div class="contact-grid">
+          <div class="contact-item"><small>Email</small><a href="mailto:mitraboga31@gmail.com">mitraboga31@gmail.com</a></div>
+          <div class="contact-item"><small>WhatsApp</small><a href="tel:+918125263863">+91 81252 63863</a></div>
+          <div class="contact-item"><small>LinkedIn</small><a href="https://www.linkedin.com/in/bogamitra/">bogamitra</a></div>
+          <div class="contact-item"><small>GitHub</small><a href="https://github.com/mitraboga">mitraboga</a></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="direct-booking-panel" aria-label="Google Calendar booking">
+      <div>
+        <h2>Book with Google Calendar</h2>
+        <p>Use the inline Google Calendar appointment scheduler below. If the embedded scheduler does not load in your browser, use the direct booking button.</p>
+      </div>
+      <a class="btn primary" href="https://calendar.app.google/nMySATndMpezxhWp6">Open booking calendar</a>
+    </section>
+
+    <section class="calendar-embed" aria-label="Inline Google Calendar appointment scheduler">
+      <!-- Google Calendar Appointment Scheduling begin -->
+      <iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3dHtm64Rk1ncNERYWn5roK-IsWNjZ2vmhB7PDw-jqYR4H7PwXWOXhSeVjlUwv7Np6_GE4y6ENh?gv=true" width="100%" height="600" frameborder="0"></iframe>
+      <!-- end Google Calendar Appointment Scheduling -->
+    </section>
+  </main>
+</body>
+</html>
