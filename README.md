@@ -125,5 +125,3 @@ By the end of the program, students will:
 </p>
 
 ---
-
-```
