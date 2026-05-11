@@ -1,6 +1,13 @@
 <div align="center">
 
 # Matrix Tutoring Academy
+
+[![AI-Native](https://img.shields.io/badge/AI--Native-Education-blue?style=for-the-badge)]()
+[![Computer Science](https://img.shields.io/badge/Computer%20Science-Engineering-gold?style=for-the-badge)]()
+[![Project Based](https://img.shields.io/badge/Project--Based-Learning-black?style=for-the-badge)]()
+
+<img src="assets/MTA_Logo.png" alt="Matrix Tutoring Academy Logo" width="680"/>
+
 ### Building the Next Generation of AI-Native Engineers, Thinkers, and Innovators.
 
 </div>
@@ -86,7 +93,7 @@ at:
 
 I currently maintain:
 - **8.22 CGPA**
-- Multiple Professor Recommendation Letters
+- Multiple [Professor Testimonials & Recommendation Letters](https://github.com/mitraboga/RecommendationLetters)
 - Industry-recognized certifications
 
 ---
@@ -118,3 +125,5 @@ By the end of the program, students will:
 </p>
 
 ---
+
+```
