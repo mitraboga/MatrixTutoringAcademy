@@ -93,7 +93,7 @@ at:
 
 I currently maintain:
 - **8.22 CGPA**
-- Multiple [Professor Testimonials & Recommendation Letters](https://github.com/mitraboga/RecommendationLetters)
+- Multiple [Professor Testimonials & Recommendation Letters](https://github.com/mitraboga/recommendation-letters)
 - Industry-recognized certifications
 
 ---
